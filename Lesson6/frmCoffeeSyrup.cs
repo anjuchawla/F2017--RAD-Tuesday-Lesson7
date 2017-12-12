@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,16 @@ namespace Lesson6
 {
     public partial class frmCoffeeSyrup : Form
     {
+        private StreamReader coffeeStreamReader;
+        private StreamWriter coffeeStreamWriter;
+        private FileStream fs;
+        bool isDirty = false;
+
+
         public frmCoffeeSyrup()
         {
-            InitializeComponent();
+            InitializeComponent(); ;
+
         }
 
 
@@ -150,6 +158,7 @@ namespace Lesson6
                     //add the flavour
                     cboCoffee.Items.Add(cboCoffee.Text.Trim());
                     cboCoffee.Text = String.Empty;
+                    isDirty = true;
                 }
 
             }
@@ -204,6 +213,7 @@ namespace Lesson6
                     cboCoffee.Items.RemoveAt(position);
                     MessageBox.Show("Coffee flavour removed", "Remove Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cboCoffee.Text = String.Empty;
+                    isDirty = true;
                 }
             }
 
@@ -221,6 +231,7 @@ namespace Lesson6
                 else //selection made
                 {
                     cboCoffee.Items.RemoveAt(cboCoffee.SelectedIndex);
+                    isDirty = true;
                     //cboCoffee.Items.Remove(cboCoffee.SelectedItem);
                     // cboCoffee.Items.Remove(coffeeComboBox.Items[cboCoffee.SelectedIndex]);
                     MessageBox.Show("Coffee flavour removed", "Remove Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -297,7 +308,76 @@ namespace Lesson6
             if (confirm == DialogResult.Yes)
             {
                 cboCoffee.Items.Clear();
+                isDirty = true;
             }
+        }
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult response;
+            String coffeeName;
+            String dir = @"C:\anju\files";
+
+            //check before opening - close the stream if it is open
+            if (fs != null)
+                fs.Close();
+            //if (coffeeStreamReader != null)
+               // coffeeStreamReader.Close();
+
+            //set the properties of the open file dialog
+            openFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();//  dir;
+            openFileDialog1.FileName = "coffees.txt";
+            openFileDialog1.Filter = "Text Files(*.txt)|*.txt|All Files(*.*)|*.*";
+            openFileDialog1.Title = "Select File or Directory";
+
+            //show the file dialog box and capture user's response
+            response = openFileDialog1.ShowDialog();
+
+            //if the user has chosen to open a file
+            if(response != DialogResult.Cancel )
+            {
+                try
+                {
+                    fs = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.None);
+                    coffeeStreamReader = new StreamReader(fs);
+                   //coffeeStreamReader = new StreamReader(openFileDialog1.FileName);
+
+
+
+                        }
+                //catch ALL possiible exceptions that are thrown from the above try
+                catch(IOException ioEx)
+                {
+                    MessageBox.Show(ioEx.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                finally
+                {
+                    if (fs != null)
+                        fs.Close();
+                   // if (coffeeStreamReader != null)
+                       // coffeeStreamReader.Close();
+
+
+                }
+            }
+           
+
+
+
+
+
+
+
+        }
+
+        private void frmCoffeeSyrup_Load(object sender, EventArgs e)
+        {
+            openFileToolStripMenuItem_Click(sender, e);
         }
     }
 }

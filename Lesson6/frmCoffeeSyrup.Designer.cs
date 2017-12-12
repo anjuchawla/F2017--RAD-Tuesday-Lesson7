@@ -55,6 +55,10 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printAllDocument = new System.Drawing.Printing.PrintDocument();
             this.printSelectedDocument = new System.Drawing.Printing.PrintDocument();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveCoffeeFlavoursInFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,12 +103,6 @@
             // cboCoffee
             // 
             this.cboCoffee.FormattingEnabled = true;
-            this.cboCoffee.Items.AddRange(new object[] {
-            "Chocolate Almond",
-            "Espresso Roast",
-            "Jamaica Blue Mountain",
-            "Kona Blend",
-            "Vanilla Nut"});
             this.cboCoffee.Location = new System.Drawing.Point(68, 167);
             this.cboCoffee.Name = "cboCoffee";
             this.cboCoffee.Size = new System.Drawing.Size(193, 24);
@@ -143,6 +141,8 @@
             // tsmiFile
             // 
             this.tsmiFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem,
+            this.saveCoffeeFlavoursInFileToolStripMenuItem,
             this.tsmiPrintSelectedFlavours,
             this.tsmiPrintAllFlavours,
             this.toolStripSeparator1,
@@ -157,7 +157,7 @@
             this.tsmiPrintSelected,
             this.tsmiPreviewSelected});
             this.tsmiPrintSelectedFlavours.Name = "tsmiPrintSelectedFlavours";
-            this.tsmiPrintSelectedFlavours.Size = new System.Drawing.Size(233, 26);
+            this.tsmiPrintSelectedFlavours.Size = new System.Drawing.Size(264, 26);
             this.tsmiPrintSelectedFlavours.Text = "Print &Selected Flavours";
             // 
             // tsmiPrintSelected
@@ -180,7 +180,7 @@
             this.tsmiPrintAll,
             this.tsmiPreviewAll});
             this.tsmiPrintAllFlavours.Name = "tsmiPrintAllFlavours";
-            this.tsmiPrintAllFlavours.Size = new System.Drawing.Size(233, 26);
+            this.tsmiPrintAllFlavours.Size = new System.Drawing.Size(264, 26);
             this.tsmiPrintAllFlavours.Text = "Print &All Flavours";
             // 
             // tsmiPrintAll
@@ -200,12 +200,12 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(230, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(261, 6);
             // 
             // tsmiExit
             // 
             this.tsmiExit.Name = "tsmiExit";
-            this.tsmiExit.Size = new System.Drawing.Size(233, 26);
+            this.tsmiExit.Size = new System.Drawing.Size(264, 26);
             this.tsmiExit.Text = "E&xit";
             this.tsmiExit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -281,6 +281,23 @@
             // 
             this.printSelectedDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printSelectedDocument_PrintPage);
             // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(264, 26);
+            this.openFileToolStripMenuItem.Text = "&Open File";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // saveCoffeeFlavoursInFileToolStripMenuItem
+            // 
+            this.saveCoffeeFlavoursInFileToolStripMenuItem.Name = "saveCoffeeFlavoursInFileToolStripMenuItem";
+            this.saveCoffeeFlavoursInFileToolStripMenuItem.Size = new System.Drawing.Size(264, 26);
+            this.saveCoffeeFlavoursInFileToolStripMenuItem.Text = "Sa&ve Coffee Flavours in File";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // frmCoffeeSyrup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -297,6 +314,7 @@
             this.Name = "frmCoffeeSyrup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "R \'n R for Reading and Refreshment";
+            this.Load += new System.EventHandler(this.frmCoffeeSyrup_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -332,6 +350,10 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiPreviewSelected;
         private System.Windows.Forms.ToolStripMenuItem tsmiPrintAll;
         private System.Windows.Forms.ToolStripMenuItem tsmiPreviewAll;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveCoffeeFlavoursInFileToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
