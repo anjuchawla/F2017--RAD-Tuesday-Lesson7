@@ -23,7 +23,7 @@ namespace Lesson6
     {
         private StreamReader coffeeStreamReader;
         private StreamWriter coffeeStreamWriter;
-        private FileStream fs;
+        private FileStream fs, fs1;
         bool isDirty = false;
 
 
@@ -342,6 +342,15 @@ namespace Lesson6
                     coffeeStreamReader = new StreamReader(fs);
                    //coffeeStreamReader = new StreamReader(openFileDialog1.FileName);
 
+                    //read the contents of the file
+                    //data in file?
+                   while(coffeeStreamReader.Peek() != -1)
+                
+                   {
+                        coffeeName = coffeeStreamReader.ReadLine();
+                        cboCoffee.Items.Add(coffeeName);
+                   }
+
 
 
                         }
@@ -378,6 +387,91 @@ namespace Lesson6
         private void frmCoffeeSyrup_Load(object sender, EventArgs e)
         {
             openFileToolStripMenuItem_Click(sender, e);
+        }
+
+        private void saveCoffeeFlavoursInFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult response;
+
+            if(isDirty)
+            {
+                //close the file before opening it
+                if (coffeeStreamWriter != null)
+                    coffeeStreamWriter.Close();
+
+                //set properties of save file dialog
+               // saveFileDialog1.InitialDirectory = Directory.GetCurrentDirectory();
+                saveFileDialog1.FileName = "coffees";
+                saveFileDialog1.DefaultExt = "txt";
+                saveFileDialog1.Title = "Save File";
+                saveFileDialog1.Filter =  "Text Files(*.txt)|*.txt|All Files(*.*)|*.*";
+
+                response = saveFileDialog1.ShowDialog();
+
+                if(response != DialogResult.Cancel )
+                {
+                    try
+                    {
+                        //fs1 = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.Write);
+                       // coffeeStreamWriter = new StreamWriter(fs1);
+                        coffeeStreamWriter = new StreamWriter(saveFileDialog1.FileName);
+                        //copy coffee flavours from the list to the file
+                        foreach(string coffee in cboCoffee.Items)
+                        {
+                            coffeeStreamWriter.WriteLine(coffee);
+                        }
+
+                        //changes saved
+                        isDirty = false;
+
+                    }
+                    //create catch blocks for all exceptions being thrown
+                    catch(IOException ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                    finally
+                    {
+                      //  if (fs1 != null)
+                         //   fs1.Close();
+                        if (coffeeStreamWriter != null)
+                            coffeeStreamWriter.Close();
+                    }
+                }
+
+
+
+
+            }
+            else
+                {
+                MessageBox.Show("No changes to the coffee flavours list...no changes to save",
+                    "Save Coffee Flavours",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void frmCoffeeSyrup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //book keeping before program terminates
+            if (fs != null)
+                fs.Close(); //automatically closes the stream reader object
+           // if (fs1 != null)
+              //  fs1.Close();
+            if (coffeeStreamWriter != null)
+                coffeeStreamWriter.Close();
+
+            //saving if changes were made
+            if(isDirty)
+            {
+                DialogResult confirm = MessageBox.Show("Coffee flavours list updated. Save changes?",
+                    "Save Coffee Flavours", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                if(confirm == DialogResult.Yes)
+                {
+                    saveCoffeeFlavoursInFileToolStripMenuItem_Click(sender, e);
+                }
+            }
         }
     }
 }

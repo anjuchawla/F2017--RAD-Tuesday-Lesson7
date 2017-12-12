@@ -293,6 +293,7 @@
             this.saveCoffeeFlavoursInFileToolStripMenuItem.Name = "saveCoffeeFlavoursInFileToolStripMenuItem";
             this.saveCoffeeFlavoursInFileToolStripMenuItem.Size = new System.Drawing.Size(264, 26);
             this.saveCoffeeFlavoursInFileToolStripMenuItem.Text = "Sa&ve Coffee Flavours in File";
+            this.saveCoffeeFlavoursInFileToolStripMenuItem.Click += new System.EventHandler(this.saveCoffeeFlavoursInFileToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
@@ -314,6 +315,7 @@
             this.Name = "frmCoffeeSyrup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "R \'n R for Reading and Refreshment";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCoffeeSyrup_FormClosing);
             this.Load += new System.EventHandler(this.frmCoffeeSyrup_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
